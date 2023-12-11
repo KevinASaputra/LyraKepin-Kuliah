@@ -6,7 +6,7 @@ public class KASIRFIX {
     private static int[] totalPembelian = new int[100];
     private static int indeksTransaksi = 0;
     private static final String ADMIN_PASSWORD = "admin123";
-    private static Scanner scanner = new Scanner(System.in); 
+    private static Scanner scanner = new Scanner(System.in);
 
     // BAGIAN PENENTUAN ADMIN ATAU USER //
     public static void main(String[] args) {
@@ -40,307 +40,270 @@ public class KASIRFIX {
                 System.exit(0);
             }
 
-
             ulangProgram = tanyaUlangProgram();
         } while (ulangProgram);
         System.out.println("Terima kasih telah menggunakan Aplikasi Apotek. Sampai jumpa lagi!");
-        
-    } 
+        scanner.close();
+    }
 
-
-
-
-
-
-
-   // BAGIAN ADMIN //
+    // BAGIAN ADMIN //
 
     private static void fiturAdmin() {
-        Scanner scanner = new Scanner(System.in);
         int adminChoice;
-        
 
         do {
-        System.out.println("\n--- Fitur Admin ---");
-        System.out.println("Selamat datang, admin! Silahkan pilih salah satu!");
-        System.out.println("1. Kelola Stok Obat");
-        System.out.println("2. Identifikasi Kadaluwarsa");
-        System.out.println("3. Total Transaksi");
-        System.out.println("4. Kembali ke menu utama");
-        System.out.println("5. Keluar");
-        System.out.print("Masukkan pilihan Anda: ");
-        adminChoice = scanner.nextInt();
-     
+            System.out.println("\n--- Fitur Admin ---");
+            System.out.println("Selamat datang, admin! Silahkan pilih salah satu!");
+            System.out.println("1. Kelola Stok Obat");
+            System.out.println("2. Identifikasi Kadaluwarsa");
+            System.out.println("3. Total Transaksi");
+            System.out.println("4. Kembali ke menu utama");
+            System.out.println("5. Keluar");
+            System.out.print("Masukkan pilihan Anda: ");
+            adminChoice = scanner.nextInt();
 
-        switch (adminChoice) {
-            case 1:
-                fiturKelolaStokObat();
-                
-                break;
+            switch (adminChoice) {
+                case 1:
+                    fiturKelolaStokObat();
 
-            case 2:
-                fiturIdentifikasiKadaluwarsa();
-                
-                break;
+                    break;
 
-            case 3:
-                lihatTotalTransaksi();
-                
-                break;
+                case 2:
+                    fiturIdentifikasiKadaluwarsa();
 
-            case 4:
-                System.out.println("\n...kembali ke menu utama...");
-                
-            return;
+                    break;
 
-            case 5:
-             System.out.println("..Keluar..");
-                System.exit(0);
-                break;
+                case 3:
+                    lihatTotalTransaksi();
 
-            default:
-            System.out.println("=============================================================");
-                System.out.println("Pilihan tidak sesuai (1),(2),(3) dan (4), Coba lagi!");
+                    break;
+
+                case 4:
+                    System.out.println("\n...kembali ke menu utama...");
+
+                    return;
+
+                case 5:
+                    System.out.println("..Keluar..");
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("=============================================================");
+                    System.out.println("Pilihan tidak sesuai (1),(2),(3) dan (4), Coba lagi!");
+            }
+        } while (adminChoice != 4);
+    }
+
+    private static void fiturKelolaStokObat() {
+        int pilihan;
+
+        String[][] stokObat = {
+                { "Batuk", "20" },
+                { "Pilek", "20" },
+                { "Pusing", "20" }
+        };
+
+        do {
+            System.out.println("\n--- Menu Kelola Stok Obat ---");
+            System.out.println("1. Tampilkan Detail Stok Obat");
+            System.out.println("2. Tambah Stok Obat");
+            System.out.println("3. Kurangi Stok Obat");
+            System.out.println("4. Kembali ke menu");
+            System.out.println("5. Keluar");
+            System.out.print("\nMasukkan pilihan Anda: ");
+
+            pilihan = scanner.nextInt();
+
+            switch (pilihan) {
+                case 1:
+                    tampilkanDetailStok(stokObat);
+                    break;
+                case 2:
+                    tambahStok(stokObat);
+                    break;
+                case 3:
+                    kurangiStok(stokObat);
+                    break;
+                case 4:
+                    System.out.println("----------------------------");
+                    System.out.println("...kembali ke menu...");
+                    return;
+                case 5:
+                    System.out.println("..Keluar..");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid, harap masukkan angka 1-4!");
+            }
+        } while (pilihan != 5);
+    }
+
+    private static void tampilkanDetailStok(String[][] obatList) {
+        System.out.println("\nDetail Stok Obat:");
+        for (String[] obat : obatList) {
+            int stok = Integer.parseInt(obat[1]);
+            System.out.println("Obat: " + obat[0] + ", Stok: " + stok);
+
+            for (int i = 0; i < stok; i++) {
+                System.out.print("*");
+            }
+            System.out.println();
         }
-    } while (adminChoice !=4);
-    scanner.close();
-    } 
 
-
- private static void fiturKelolaStokObat() {
-    Scanner scanner = new Scanner(System.in);
-
-    int pilihan;
-   
-
-
-  String[][] stokObat = {
-    { "Batuk", "20" },
-    { "Pilek", "20" },
-    { "Pusing", "20" }
-  };
-
-  do {
-   System.out.println("\n--- Menu Kelola Stok Obat ---");
-   System.out.println("1. Tampilkan Detail Stok Obat");
-   System.out.println("2. Tambah Stok Obat");
-   System.out.println("3. Kurangi Stok Obat");
-   System.out.println("4. Kembali ke menu");
-   System.out.println("5. Keluar");
-   System.out.print("\nMasukkan pilihan Anda: ");
-
-   pilihan = scanner.nextInt();
-
-   switch (pilihan) {
-    case 1:
-     tampilkanDetailStok(stokObat);
-     break;
-    case 2:
-     tambahStok(stokObat);
-     break;
-    case 3:
-     kurangiStok(stokObat);
-     break;
-    case 4:
-    System.out.println("----------------------------");
-    System.out.println("...kembali ke menu...");
-     return;
-     case 5:
-      System.out.println("..Keluar..");
-     System.exit(0);
-     break;
-    default:
-     System.out.println("Pilihan tidak valid, harap masukkan angka 1-4!");
-   }
-  }
-  while (pilihan != 5);
-
-
-  scanner.close();
- }
-
-
-
-
-
-private static void tampilkanDetailStok(String[][] obatList) {
-  System.out.println("\nDetail Stok Obat:");
-  for (String[] obat : obatList) {
-   int stok = Integer.parseInt(obat[1]);
-   System.out.println("Obat: " + obat[0] + ", Stok: " + stok);
-
-   for (int i = 0; i < stok; i++) {
-    System.out.print("*");
-   }
-   System.out.println(); 
-  }
-  
- }
-
-
-
-
-
-
- private static void tambahStok(String[][] obatList) {
-  System.out.print("\nMasukkan nama obat untuk menambah stok : ");
-  Scanner scanner0 = new Scanner(System.in);
-  String nama = scanner0.nextLine();
-
-  boolean ditemukan = false;
-
-  for (String[] obat : obatList) {
-   if (obat[0].equalsIgnoreCase(nama)) {
-    boolean inputValid = false;
-    int jumlah = 0;
-
-    while (!inputValid) {
-     System.out.print("\nMasukkan jumlah stok yang akan ditambahkan untuk " + obat[0] + ": ");
-
-     String inputJumlah = scanner0.nextLine();
-     if (inputJumlah.matches("\\d+")) {
-      jumlah = Integer.parseInt(inputJumlah);
-
-      if (jumlah >= 0) {
-       inputValid = true;
-      } else {
-       System.out.println("Jumlah stok tidak boleh negatif.");
-      }
-
-     } else {
-      System.out.println("Masukkan angka yang valid.");
-     }
     }
 
-    int stokSaatIni = Integer.parseInt(obat[1]);
-    obat[1] = Integer.toString(stokSaatIni + jumlah);
-    ditemukan = true;
-    System.out.println("----------------------------------------------------------");
-    System.out.println("Stok " + obat[0] + " ditambahkan sebanyak : " + jumlah);
-    System.out.println("Jumlah stok saat ini: " + obat[1]);
-    return;
-   }
-  }
+    private static void tambahStok(String[][] obatList) {
+        System.out.print("\nMasukkan nama obat untuk menambah stok : ");
+        Scanner scanner0 = new Scanner(System.in);
+        String nama = scanner0.nextLine();
 
-  if (!ditemukan) {
-   System.out.println("Obat tidak ditemukan dalam daftar stok.");
-  }
-  scanner0.close();
- }
+        boolean ditemukan = false;
 
+        for (String[] obat : obatList) {
+            if (obat[0].equalsIgnoreCase(nama)) {
+                boolean inputValid = false;
+                int jumlah = 0;
 
+                while (!inputValid) {
+                    System.out.print("\nMasukkan jumlah stok yang akan ditambahkan untuk " + obat[0] + ": ");
 
+                    String inputJumlah = scanner0.nextLine();
+                    if (inputJumlah.matches("\\d+")) {
+                        jumlah = Integer.parseInt(inputJumlah);
 
- private static void kurangiStok(String[][] obatList) {
-  System.out.print("\nMasukkan nama obat untuk mengurangi stok : ");
-  Scanner scanner1 = new Scanner(System.in);
-  String nama = scanner1.nextLine();
-  boolean ditemukan = false;
+                        if (jumlah >= 0) {
+                            inputValid = true;
+                        } else {
+                            System.out.println("Jumlah stok tidak boleh negatif.");
+                        }
 
-  for (String[] obat : obatList) {
-   if (obat[0].equalsIgnoreCase(nama)) {
-    boolean inputValid = false;
-    int jumlah = 0;
+                    } else {
+                        System.out.println("Masukkan angka yang valid.");
+                    }
+                }
 
-    while (!inputValid) {
-     System.out.print("\nMasukkan jumlah yang akan dikurangi dari stok " + obat[0] + ": ");
-     String inputJumlah = scanner1.nextLine();
+                int stokSaatIni = Integer.parseInt(obat[1]);
+                obat[1] = Integer.toString(stokSaatIni + jumlah);
+                ditemukan = true;
+                System.out.println("----------------------------------------------------------");
+                System.out.println("Stok " + obat[0] + " ditambahkan sebanyak : " + jumlah);
+                System.out.println("Jumlah stok saat ini: " + obat[1]);
+                return;
+            }
+        }
 
-     if (inputJumlah.matches("\\d+")) {
-      jumlah = Integer.parseInt(inputJumlah);
-      int stokSaatIni = Integer.parseInt(obat[1]);
-
-      if (jumlah >= 0 && jumlah <= stokSaatIni) {
-       inputValid = true;
-       break;
-
-      } else {
-       System.out
-         .println("Jumlah tidak valid. Tidak boleh negatif atau lebih dari stok saat ini.");
-      }
-     } else {
-      System.out.println("Masukkan angka yang valid.");
-     }
+        if (!ditemukan) {
+            System.out.println("Obat tidak ditemukan dalam daftar stok.");
+        }
+        scanner0.close();
     }
 
-    int stokSaatIni = Integer.parseInt(obat[1]);
-    obat[1] = Integer.toString(stokSaatIni - jumlah);
-    ditemukan = true;
-    System.out.println("Stok " + obat[0] + " dikurangi sebanyak : " + jumlah);
-    System.out.println("Jumlah stok saat ini: " + obat[1]);
-    return;
-   }
-  }
+    private static void kurangiStok(String[][] obatList) {
+        System.out.print("\nMasukkan nama obat untuk mengurangi stok : ");
+        Scanner scanner1 = new Scanner(System.in);
+        String nama = scanner1.nextLine();
+        boolean ditemukan = false;
 
-  if (!ditemukan) {
-   System.out.println("Obat tidak ditemukan dalam daftar stok.");
-  } scanner1.close();
- }
+        for (String[] obat : obatList) {
+            if (obat[0].equalsIgnoreCase(nama)) {
+                boolean inputValid = false;
+                int jumlah = 0;
 
+                while (!inputValid) {
+                    System.out.print("\nMasukkan jumlah yang akan dikurangi dari stok " + obat[0] + ": ");
+                    String inputJumlah = scanner1.nextLine();
 
+                    if (inputJumlah.matches("\\d+")) {
+                        jumlah = Integer.parseInt(inputJumlah);
+                        int stokSaatIni = Integer.parseInt(obat[1]);
 
-private static void fiturIdentifikasiKadaluwarsa() {
-  Scanner input = new Scanner(System.in);
-  char Tgl_Kadaluwarsa, metode_pembuangan;
-  boolean ulangLagi = true;
+                        if (jumlah >= 0 && jumlah <= stokSaatIni) {
+                            inputValid = true;
+                            break;
 
-  do {
-System.out.println("\n--- Menu kelola obat kadaluwarsa ---");
-  System.out.println("Obat kadaluwarsa? | a.Iya | b.Tidak |");
-  System.out.print("Masukkan disini (a) / (b) : ");
-  Tgl_Kadaluwarsa = input.next().charAt(0);
+                        } else {
+                            System.out
+                                    .println("Jumlah tidak valid. Tidak boleh negatif atau lebih dari stok saat ini.");
+                        }
+                    } else {
+                        System.out.println("Masukkan angka yang valid.");
+                    }
+                }
 
-  if (Tgl_Kadaluwarsa == 'a') {
-   System.out.println("\nPilih metode pembuangan :\na) Penghancuran dengan penghancur obat khusus,\nb) Pengembalian ke pemasok obat, \nc) Pembuangan di tempat pembuangan obat yang aman,yang biasanya dikelola oleh pemerintah setempat.");
-   System.out.print("Pilih salah satu : ");
-   metode_pembuangan = input.next().charAt(0);
+                int stokSaatIni = Integer.parseInt(obat[1]);
+                obat[1] = Integer.toString(stokSaatIni - jumlah);
+                ditemukan = true;
+                System.out.println("Stok " + obat[0] + " dikurangi sebanyak : " + jumlah);
+                System.out.println("Jumlah stok saat ini: " + obat[1]);
+                return;
+            }
+        }
 
-   if (metode_pembuangan == 'a') {
-    System.out.println("------------------------------------------------------------------------");
-    System.out.println("Pilihan anda akan disampaikan kepada pihak pengelola, terimakasih.");
-    System.exit(0);
-   }
+        if (!ditemukan) {
+            System.out.println("Obat tidak ditemukan dalam daftar stok.");
+        }
+        scanner1.close();
+    }
 
-   else if (metode_pembuangan == 'b') {
-    System.out.println("------------------------------------------------------------------------");
-    System.out.println("Pilihan anda akan disampaikan kepada pihak pengelola, terimakasih.");
-    System.exit(0);
+    private static void fiturIdentifikasiKadaluwarsa() {
+        Scanner input = new Scanner(System.in);
+        char Tgl_Kadaluwarsa, metode_pembuangan;
+        boolean ulangLagi = true;
 
-   } else if (metode_pembuangan == 'c') {
-    System.out.println("------------------------------------------------------------------------");
-    System.out.println("Pilihan anda akan disampaikan kepada pihak pengelola, terimakasih.");
-    System.exit(0);
+        do {
+            System.out.println("\n--- Menu kelola obat kadaluwarsa ---");
+            System.out.println("Obat kadaluwarsa? | a.Iya | b.Tidak |");
+            System.out.print("Masukkan disini (a) / (b) : ");
+            Tgl_Kadaluwarsa = input.next().charAt(0);
 
-   } else {
-    System.out.println("----------------------------------------------------");
-    System.out.println("Terjadi Kesalahan! Pilih sesuai yang tertera!"); 
-    System.out.println("\n.....Kembali ke pertanyaan obat kadaluwarsa....");
-    ulangLagi = false;
-   }
-  }
+            if (Tgl_Kadaluwarsa == 'a') {
+                System.out.println(
+                        "\nPilih metode pembuangan :\na) Penghancuran dengan penghancur obat khusus,\nb) Pengembalian ke pemasok obat, \nc) Pembuangan di tempat pembuangan obat yang aman,yang biasanya dikelola oleh pemerintah setempat.");
+                System.out.print("Pilih salah satu : ");
+                metode_pembuangan = input.next().charAt(0);
 
-  else if (Tgl_Kadaluwarsa == 'b') {
-    System.out.println("------------------------");
-   System.out.println("Obat masih valid.");
-   System.out.println(".....keluar.....");
-   System.exit(0);
-  }
+                if (metode_pembuangan == 'a') {
+                    System.out.println("------------------------------------------------------------------------");
+                    System.out.println("Pilihan anda akan disampaikan kepada pihak pengelola, terimakasih.");
+                    System.exit(0);
+                }
 
-  else {
-    System.out.println("----------------------------------------------------");
-   System.out.println("Terjadi kesalahan! Pilih sesuai yang tertera!"); // Obat kadaluwarsa iya apa tidak
-   ulangLagi = false;
-  }
- } while (!ulangLagi);
- System.out.println();
+                else if (metode_pembuangan == 'b') {
+                    System.out.println("------------------------------------------------------------------------");
+                    System.out.println("Pilihan anda akan disampaikan kepada pihak pengelola, terimakasih.");
+                    System.exit(0);
 
- input.close();
-}
+                } else if (metode_pembuangan == 'c') {
+                    System.out.println("------------------------------------------------------------------------");
+                    System.out.println("Pilihan anda akan disampaikan kepada pihak pengelola, terimakasih.");
+                    System.exit(0);
 
+                } else {
+                    System.out.println("----------------------------------------------------");
+                    System.out.println("Terjadi Kesalahan! Pilih sesuai yang tertera!");
+                    System.out.println("\n.....Kembali ke pertanyaan obat kadaluwarsa....");
+                    ulangLagi = false;
+                }
+            }
 
+            else if (Tgl_Kadaluwarsa == 'b') {
+                System.out.println("------------------------");
+                System.out.println("Obat masih valid.");
+                System.out.println(".....keluar.....");
+                System.exit(0);
+            }
 
+            else {
+                System.out.println("----------------------------------------------------");
+                System.out.println("Terjadi kesalahan! Pilih sesuai yang tertera!"); // Obat kadaluwarsa iya apa tidak
+                ulangLagi = false;
+            }
+        } while (!ulangLagi);
+        System.out.println();
 
-
+        input.close();
+    }
 
     private static void lihatTotalTransaksi() {
         System.out.println("\n---  Menu Total Transaksi ---");
@@ -367,15 +330,9 @@ System.out.println("\n--- Menu kelola obat kadaluwarsa ---");
         System.exit(0);
     }
 
-
-
-
-
-
-
     // BAGIAN USER //
 
- private static void fiturUser() {
+    private static void fiturUser() {
         System.out.println("\n--- Fitur User ---");
         System.out.println("(1) Yuk, Berbelanja!  || (2) ..Yah Sampai Jumpa..");
         System.out.print("Masukkan pilihan Anda: ");
@@ -387,256 +344,251 @@ System.out.println("\n--- Menu kelola obat kadaluwarsa ---");
                 break;
 
             case 2:
-            System.out.println("======================================");
+                System.out.println("======================================");
                 System.out.println("Terimakasih! Bye bye~ ^_^");
                 System.exit(0);
-                
 
             default:
                 System.out.println("Pilihan tidak sesuai (2) / (1). Aplikasi akan ditutup.");
                 System.exit(0);
         }
-        
+
     }
 
+    private static int fiturPembayaran() {
 
- private static int fiturPembayaran() {
-  try (Scanner sc = new Scanner(System.in)){
-  int total = 0;
-  String[] jenisObatan = { "Obat Batuk", "Obat Pilek", "Obat Pusing" };
-  String pilihObatLagi;
-  boolean memilihObatLagi;
-  boolean mengulang = false;
+        int total = 0;
+        String[] jenisObatan = { "Obat Batuk", "Obat Pilek", "Obat Pusing" };
+        String pilihObatLagi;
+        boolean memilihObatLagi;
+        boolean mengulang = false;
 
-  do {
-   System.out.println("\nDaftar Jenis Obat di Apotek:");
-   for (int i = 0; i < jenisObatan.length; i++) {
-    System.out.println((i + 1) + ". " + jenisObatan[i]);
-   }
-   
-   System.out.print("Masukkan nomor jenis obat yang ingin Anda pilih: ");
-   int nomorJenisObat = sc.nextInt();
+        do {
+            System.out.println("\nDaftar Jenis Obat di Apotek:");
+            for (int i = 0; i < jenisObatan.length; i++) {
+                System.out.println((i + 1) + ". " + jenisObatan[i]);
+            }
 
-   if (nomorJenisObat >= 1 && nomorJenisObat <= jenisObatan.length) {
-    String namaJenisObat = jenisObatan[nomorJenisObat - 1];
-    System.out.println("Anda memilih jenis obat: " + namaJenisObat);
+            System.out.print("Masukkan nomor jenis obat yang ingin Anda pilih: ");
+            int nomorJenisObat = scanner.nextInt();
 
-    String[] namaObat;
-    int[] hargaObat;
+            if (nomorJenisObat >= 1 && nomorJenisObat <= jenisObatan.length) {
+                String namaJenisObat = jenisObatan[nomorJenisObat - 1];
+                System.out.println("Anda memilih jenis obat: " + namaJenisObat);
 
-    if (namaJenisObat.equals("Obat Batuk")) {
-     namaObat = new String[] { "Actifed cough", "Woods Antitussive", "Sanadryl DMP",
-       "Siladex Antitussive", "Vicks Formula 44 Syrup", "Benadryl Original",
-       "Bodrex Flu & Batuk PE", "Konidin", "Anadex", "Vectrine Dry Syrup" };
-     hargaObat = new int[] { 20000, 25000, 22000, 18000, 30000, 19000, 21000, 28000, 24000, 26000 };
+                String[] namaObat;
+                int[] hargaObat;
 
-    } else if (namaJenisObat.equals("Obat Pilek")) {
-     namaObat = new String[] { "Actifed Plus Expectorant", "Siladex Batuk dan Pilek",
-       "Triaminic Expectorant & Pilek", "OBH Tropica Extra", "Pim-Tra-Kol", "Po Loong Pills",
-       "Nalgestan", "Triaminic Batuk & Pilek", "Paratusin", "Silex" };
-     hargaObat = new int[] { 22000, 26000, 23000, 21000, 25000, 27000, 24000, 20000, 23000, 25000 };
+                if (namaJenisObat.equals("Obat Batuk")) {
+                    namaObat = new String[] { "Actifed cough", "Woods Antitussive", "Sanadryl DMP",
+                            "Siladex Antitussive", "Vicks Formula 44 Syrup", "Benadryl Original",
+                            "Bodrex Flu & Batuk PE", "Konidin", "Anadex", "Vectrine Dry Syrup" };
+                    hargaObat = new int[] { 20000, 25000, 22000, 18000, 30000, 19000, 21000, 28000, 24000, 26000 };
 
-    } else {
-     namaObat = new String[] { "Puyer Bintang Toedjoe", "Panadol Extra Tablet", "Bodrex", "Paramex",
-       "Poldan Mig", "Tolak Angin Tablet", "Biogesic", "Decolgen Fx Tablet", "Pamol" };
-     hargaObat = new int[] { 15000, 18000, 16000, 20000, 19000, 17000, 21000, 22000, 17000 };
-    }
+                } else if (namaJenisObat.equals("Obat Pilek")) {
+                    namaObat = new String[] { "Actifed Plus Expectorant", "Siladex Batuk dan Pilek",
+                            "Triaminic Expectorant & Pilek", "OBH Tropica Extra", "Pim-Tra-Kol", "Po Loong Pills",
+                            "Nalgestan", "Triaminic Batuk & Pilek", "Paratusin", "Silex" };
+                    hargaObat = new int[] { 22000, 26000, 23000, 21000, 25000, 27000, 24000, 20000, 23000, 25000 };
 
-    do {
-    System.out.println("\n\nDaftar Nama Obat untuk jenis " + namaJenisObat + ":\n");
-    for (int i = 0; i < namaObat.length; i++) {
-     System.out.println((i + 1) + "." + namaObat[i] + "\nHarga: Rp." + hargaObat[i] + ",-\n");
-    }
-
-    System.out.print("Masukkan nomor obat yang Anda pilih: ");
-    int nomorObat1 = sc.nextInt();
-
-    if (nomorObat1 >= 1 && nomorObat1 <= namaObat.length) {
-
-     String obatTerpilih = namaObat[nomorObat1 - 1];
-     int hargaTerpilih = hargaObat[nomorObat1 - 1];
-     System.out.println("\n" + "Obat yang Anda pilih adalah: " + obatTerpilih);
-     System.out.println("Harga obat yang Anda pilih: Rp." + hargaTerpilih + ",-");
-     System.out.println("-----------------------------------");
-     total += hargaTerpilih;
-     System.out.println("Total semua harga obat yang dipesan : Rp." + total + ",-");
-     break;
-
-    } else  {
-     System.out.println("\nMohon pilih nomor obat yang benar! Pesanan obat anda akan hangus jika memasukkan nomor obat yang salah!");
-     System.out.println("\n1. Kembali ke awal program");
-     System.out.println("2. Keluar ");
-     System.out.print("Pilihan Anda: ");
-     int pilihan = sc.nextInt();
- 
-    if (pilihan == 1) {
-                        System.out.println();
-
-                    } else if (pilihan == 2) {
-                         System.out.println("...Terimakasih....");
-                        System.exit(0);
-                    } else {
-                        System.out.println("Pilihan tidak valid. Aplikasi akan ditutup.");
-                        System.exit(0);
-                    }
+                } else {
+                    namaObat = new String[] { "Puyer Bintang Toedjoe", "Panadol Extra Tablet", "Bodrex", "Paramex",
+                            "Poldan Mig", "Tolak Angin Tablet", "Biogesic", "Decolgen Fx Tablet", "Pamol" };
+                    hargaObat = new int[] { 15000, 18000, 16000, 20000, 19000, 17000, 21000, 22000, 17000 };
                 }
-}while (!mengulang);
-    memilihObatLagi = true;
-    pilihObatLagi = String.valueOf(memilihObatLagi);
-    System.out.print("Apakah Anda ingin memesan obat lagi (y/t)? : ");
-    pilihObatLagi = sc.next();
 
-     if (pilihObatLagi.equalsIgnoreCase("y")) {
-      memilihObatLagi = true;
-     }
+                do {
+                    System.out.println("\n\nDaftar Nama Obat untuk jenis " + namaJenisObat + ":\n");
+                    for (int i = 0; i < namaObat.length; i++) {
+                        System.out.println((i + 1) + "." + namaObat[i] + "\nHarga: Rp." + hargaObat[i] + ",-\n");
+                    }
 
-     else if (pilihObatLagi.equalsIgnoreCase("t")) {
-      boolean cobaLagi = true;
-      do {
+                    System.out.print("Masukkan nomor obat yang Anda pilih: ");
+                    int nomorObat1 = scanner.nextInt();
 
+                    if (nomorObat1 >= 1 && nomorObat1 <= namaObat.length) {
 
+                        String obatTerpilih = namaObat[nomorObat1 - 1];
+                        int hargaTerpilih = hargaObat[nomorObat1 - 1];
+                        System.out.println("\n" + "Obat yang Anda pilih adalah: " + obatTerpilih);
+                        System.out.println("Harga obat yang Anda pilih: Rp." + hargaTerpilih + ",-");
+                        System.out.println("-----------------------------------");
+                        total += hargaTerpilih;
+                        System.out.println("Total semua harga obat yang dipesan : Rp." + total + ",-");
+                        break;
 
+                    } else {
+                        System.out.println(
+                                "\nMohon pilih nomor obat yang benar! Pesanan obat anda akan hangus jika memasukkan nomor obat yang salah!");
+                        System.out.println("\n1. Kembali ke awal program");
+                        System.out.println("2. Keluar ");
+                        System.out.print("Pilihan Anda: ");
+                        int pilihan = scanner.nextInt();
 
+                        if (pilihan == 1) {
+                            System.out.println();
 
-      if (total < 100000 ) {
-        System.out.println("Silahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");
-      break;
-      }
+                        } else if (pilihan == 2) {
+                            System.out.println("...Terimakasih....");
+                            System.exit(0);
+                        } else {
+                            System.out.println("Pilihan tidak valid. Aplikasi akan ditutup.");
+                            System.exit(0);
+                        }
+                    }
+                } while (!mengulang);
+                memilihObatLagi = true;
+                pilihObatLagi = String.valueOf(memilihObatLagi);
+                System.out.print("Apakah Anda ingin memesan obat lagi (y/t)? : ");
+                pilihObatLagi = scanner.next();
 
+                if (pilihObatLagi.equalsIgnoreCase("y")) {
+                    memilihObatLagi = true;
+                }
 
+                else if (pilihObatLagi.equalsIgnoreCase("t")) {
+                    boolean cobaLagi = true;
+                    do {
 
+                        if (total < 100000) {
+                            System.out.println(
+                                    "Silahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");
+                            break;
+                        }
 
-      else if (total >= 100000 ) {
+                        else if (total >= 100000) {
 
-   System.out.print("\nApakah Anda ingin mendapatkan diskon (y/t)? ");
-   String inginDiskonInput = sc.next();
+                            System.out.print("\nApakah Anda ingin mendapatkan diskon (y/t)? ");
+                            String inginDiskonInput = scanner.next();
 
-   if (inginDiskonInput.equalsIgnoreCase("y")) {
-    System.out.print("\nApakah Anda mempunyai kartu member (y/t)? ");
-    String kartuMember = sc.next();
-    double dis = 0;
-    int poin = 0;
+                            if (inginDiskonInput.equalsIgnoreCase("y")) {
+                                System.out.print("\nApakah Anda mempunyai kartu member (y/t)? ");
+                                String kartuMember = scanner.next();
+                                double dis = 0;
+                                int poin = 0;
 
-    if (kartuMember.equalsIgnoreCase("y")) {
-      if (total >= 100000 && total <= 500000) {
-      if (total < 200000) {
-       dis = 0.2;
-       poin = 5;
-      } else if (total < 300000) {
-       dis = 0.25;
-       poin = 10;
-      } else if (total < 400000) {
-       dis = 0.3;
-       poin = 15;
-      } else if (total <= 500000) {
-       dis = 0.35;
-       poin = 20;
-      }
-    
-      System.out.println("Selamat! Anda mendapatkan diskon " + (dis * 100) + "% & tambahan poin " + poin + "! [Doorprize = 50++ poin]" );
-      System.out.println("----------------------------------------------------");
-      System.out.println("Total harga yang harus anda bayar adalah : " + (total - (total * dis)));
-     }    
+                                if (kartuMember.equalsIgnoreCase("y")) {
+                                    if (total >= 100000 && total <= 500000) {
+                                        if (total < 200000) {
+                                            dis = 0.2;
+                                            poin = 5;
+                                        } else if (total < 300000) {
+                                            dis = 0.25;
+                                            poin = 10;
+                                        } else if (total < 400000) {
+                                            dis = 0.3;
+                                            poin = 15;
+                                        } else if (total <= 500000) {
+                                            dis = 0.35;
+                                            poin = 20;
+                                        }
 
-  } else if (kartuMember.equalsIgnoreCase("t")) {
-      System.out.println("\nDAFTAR SEKARANG! ISI BIODATA ANDA! ");
-      System.out.print("Nama (Isi nama panggilan): ");
-      String nama = sc.next();
-      System.out.print("Umur (Isi angka saja): ");
-      String umur = sc.next();
-      System.out.print("Tempat lahir (kota saja): ");
-      String tmptLahir = sc.next();
-      System.out.print("Tanggal lahir (Angka saja): ");
-      int TglLahir = sc.nextInt();
-      System.out.print("Bulan (ketik huruf): ");
-      String bulan = sc.next();
-      System.out.print("Tahun (angka saja) : ");
-      int tahun = sc.nextInt();
-      System.out.print("Email: ");
-      String email = sc.next();
-      System.out.print("Password (Huruf saja,tanpa spasi): ");
-      String password = sc.next();
-      System.out.println("------------------------------------------");
-      System.out.println("Selamat! dengan pengguna " + nama + " telah menjadi Member Premium!");
+                                        System.out.println("Selamat! Anda mendapatkan diskon " + (dis * 100)
+                                                + "% & tambahan poin " + poin + "! [Doorprize = 50++ poin]");
+                                        System.out.println("----------------------------------------------------");
+                                        System.out.println("Total harga yang harus anda bayar adalah : "
+                                                + (total - (total * dis)));
+                                    }
 
-        if (total >= 100000 && total <= 500000) {
-          if (total < 200000) {
-          dis = 0.2;
-          poin = 5;
+                                } else if (kartuMember.equalsIgnoreCase("t")) {
+                                    System.out.println("\nDAFTAR SEKARANG! ISI BIODATA ANDA! ");
+                                    System.out.print("Nama (Isi nama panggilan): ");
+                                    String nama = scanner.next();
+                                    System.out.print("Umur (Isi angka saja): ");
+                                    String umur = scanner.next();
+                                    System.out.print("Tempat lahir (kota saja): ");
+                                    String tmptLahir = scanner.next();
+                                    System.out.print("Tanggal lahir (Angka saja): ");
+                                    int TglLahir = scanner.nextInt();
+                                    System.out.print("Bulan (ketik huruf): ");
+                                    String bulan = scanner.next();
+                                    System.out.print("Tahun (angka saja) : ");
+                                    int tahun = scanner.nextInt();
+                                    System.out.print("Email: ");
+                                    String email = scanner.next();
+                                    System.out.print("Password (Huruf saja,tanpa spasi): ");
+                                    String password = scanner.next();
+                                    System.out.println("------------------------------------------");
+                                    System.out.println(
+                                            "Selamat! dengan pengguna " + nama + " telah menjadi Member Premium!");
 
-          } else if (total < 300000) {
-          dis = 0.25;
-          poin = 10;
+                                    if (total >= 100000 && total <= 500000) {
+                                        if (total < 200000) {
+                                            dis = 0.2;
+                                            poin = 5;
 
-          } else if (total < 400000) {
-          dis = 0.3;
-          poin = 15;
+                                        } else if (total < 300000) {
+                                            dis = 0.25;
+                                            poin = 10;
 
-          } else if (total <= 500000) {
-          dis = 0.35;
-          poin = 20;
-          }         
+                                        } else if (total < 400000) {
+                                            dis = 0.3;
+                                            poin = 15;
 
-     
-    System.out.println("Pengguna dengan nama " + nama + " mendapatkan diskon " + (dis * 100) + "% & tambahan poin " + poin + "! [Doorprize = 50++ poin]"); 
-    System.out.println("----------------------------------------------------");
-      System.out.println("Total harga yang harus anda bayar adalah : " + (total - (total * dis)));
-     }
+                                        } else if (total <= 500000) {
+                                            dis = 0.35;
+                                            poin = 20;
+                                        }
 
-    } else {
-      System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-      System.out.println("INPUT PILIHAN YANG BENAR! (y) / (t)! ");
-      System.out.println("...kembali ke pertanyaan diskon....");
-      cobaLagi = false;
+                                        System.out.println("Pengguna dengan nama " + nama + " mendapatkan diskon "
+                                                + (dis * 100) + "% & tambahan poin " + poin
+                                                + "! [Doorprize = 50++ poin]");
+                                        System.out.println("----------------------------------------------------");
+                                        System.out.println("Total harga yang harus anda bayar adalah : "
+                                                + (total - (total * dis)));
+                                    }
+
+                                } else {
+                                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                                    System.out.println("INPUT PILIHAN YANG BENAR! (y) / (t)! ");
+                                    System.out.println("...kembali ke pertanyaan diskon....");
+                                    cobaLagi = false;
+                                }
+
+                            } else if (inginDiskonInput.equalsIgnoreCase("t")) {
+                                System.out.println("Total harga yang harus dibayar sebanyak : Rp." + total + ",-");
+                                System.out.println(
+                                        "Silahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");
+
+                            } else {
+                                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                                System.out.println("SILAHKAN INPUT YANG BENAR! (y) / (t)!");
+                                cobaLagi = false;
+                            }
+                        }
+
+                    } while (!cobaLagi);
+                    System.out.println();
+                    // Menyimpan total pembelian pada array totalPembelian
+                    totalPembelian[indeksTransaksi] = total;
+
+                    // Menyimpan total transaksi pada array totalTransaksi
+                    totalTransaksi[indeksTransaksi++] = totalTransaksiPembayaran += total;
+
+                    System.out.println("-----------------------------------------------------------------");
+                    System.out.println("Terima kasih telah melakukan pembelian di apotek kami! Have a great day!");
+                    break;
+                }
+
+                else {
+                    System.out.println("\n Pilih (y) / (t) saja. Lakukan lagi!");
+                }
+
+            } else {
+                System.out.println("Nomor obat tidak valid. Silakan coba lagi.");
+                pilihObatLagi = "true";
+                memilihObatLagi = Boolean.parseBoolean(pilihObatLagi);
+                memilihObatLagi = true;
+            }
+
+        } while (memilihObatLagi);
+        System.out.println();
+
+        return total;
+
     }
 
-   } else if (inginDiskonInput.equalsIgnoreCase("t")) {
-        System.out.println("Total harga yang harus dibayar sebanyak : Rp." + total + ",-");
-        System.out.println("Silahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");      
-
-      } else {
-      System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    System.out.println("SILAHKAN INPUT YANG BENAR! (y) / (t)!");
-    cobaLagi = false;
-   }
-  }
-
-} while (!cobaLagi);
-System.out.println();
-    // Menyimpan total pembelian pada array totalPembelian
-    totalPembelian[indeksTransaksi] = total;
-
-    // Menyimpan total transaksi pada array totalTransaksi
-    totalTransaksi[indeksTransaksi++] = totalTransaksiPembayaran += total;
-
-  System.out.println("-----------------------------------------------------------------");
-  System.out.println("Terima kasih telah melakukan pembelian di apotek kami! Have a great day!");
-  break;
-      }
-
-     else {
-      System.out.println("\n Pilih (y) / (t) saja. Lakukan lagi!");
-     }
-
-   } 
-  else {
-    System.out.println("Nomor obat tidak valid. Silakan coba lagi.");
-    pilihObatLagi = "true";
-    memilihObatLagi = Boolean.parseBoolean(pilihObatLagi);
-    memilihObatLagi = true;
-   }
-
-  } while (memilihObatLagi);
-  System.out.println();
-
-  return total;
- 
- }
-
- }
- 
-
- private static double hitungDiskon(int totalPembelian) {
+    private static double hitungDiskon(int totalPembelian) {
         double diskon = 0;
 
         if (totalPembelian >= 100000 && totalPembelian <= 500000) {
@@ -654,27 +606,23 @@ System.out.println();
         return diskon;
     }
 
+    private static boolean tanyaUlangProgram() {
+        boolean validInput = false;
+        char pilihan;
 
+        do {
+            System.out.print("\nApakah Anda ingin memulai kembali program? (y/t): ");
+            pilihan = scanner.next().charAt(0);
 
+            if (pilihan == 'y' || pilihan == 'Y' || pilihan == 't' || pilihan == 'T') {
+                validInput = true;
+                break;
+            } else {
+                System.out.println("Mohon maaf, Anda salah input. Silakan masukkan (y) / (t).");
+            }
+        } while (!validInput);
 
- private static boolean tanyaUlangProgram() {
-    boolean validInput = false;
-    char pilihan;
-
-    do {
-        System.out.print("\nApakah Anda ingin memulai kembali program? (y/t): ");
-        pilihan = scanner.next().charAt(0);
-
-        if (pilihan == 'y' || pilihan == 'Y' || pilihan == 't' || pilihan == 'T') {
-            validInput = true;
-            break;
-        } else {
-            System.out.println("Mohon maaf, Anda salah input. Silakan masukkan (y) / (t).");
-        }
-    } while (!validInput);
-
-   
-    return (pilihan == 'y' || pilihan == 'Y');
-}
+        return (pilihan == 'y' || pilihan == 'Y');
+    }
 
 }
