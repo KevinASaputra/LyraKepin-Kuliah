@@ -1,29 +1,31 @@
 import java.util.Scanner;
 
-public class KASIRFIX {
+public class Kasir90 {
+    private static String semua = "";
     private static int totalTransaksiPembayaran = 0;
     private static int[] totalTransaksi = new int[100]; // Anggap maksimum 100 transaksi, sesuaikan jika diperlukan
     private static int[] totalPembelian = new int[100];
     private static int indeksTransaksi = 0;
     private static final String ADMIN_PASSWORD = "admin123";
+    private static boolean ulangProgram = false;
     private static Scanner scanner = new Scanner(System.in);
+    private static boolean balik = true;
 
     // BAGIAN PENENTUAN ADMIN ATAU USER //
     public static void main(String[] args) {
-        boolean ulangProgram = true;
-
+        ulangProgram = true;
         do {
             System.out.println("Selamat datang di Aplikasi Apotek!");
             System.out.println("==== Selamat Berbelanja! ====");
             System.out.println("--------------------------------------------");
             System.out.print("Apakah Anda pengguna (1) | admin (2)? ");
 
-            int multi = scanner.nextInt();
+            char multi = scanner.next().charAt(0);
 
-            if (multi == 1) {
+            if (multi == '1') {
                 fiturUser();
 
-            } else if (multi == 2) {
+            } else if (multi == '2') {
                 System.out.print("\nMasukkan password admin: ");
                 String password = scanner.next();
 
@@ -43,47 +45,45 @@ public class KASIRFIX {
             ulangProgram = tanyaUlangProgram();
         } while (ulangProgram);
         System.out.println("Terima kasih telah menggunakan Aplikasi Apotek. Sampai jumpa lagi!");
-        scanner.close();
+
     }
 
     // BAGIAN ADMIN //
 
     private static void fiturAdmin() {
-        int adminChoice;
+        Scanner scanner = new Scanner(System.in);
+        char adminChoice;
 
         do {
             System.out.println("\n--- Fitur Admin ---");
-            System.out.println("Selamat datang, admin! Silahkan pilih salah satu!");
+            System.out.println("Selamat  datang, admin! Silahkan pilih salah satu!");
             System.out.println("1. Kelola Stok Obat");
             System.out.println("2. Identifikasi Kadaluwarsa");
             System.out.println("3. Total Transaksi");
             System.out.println("4. Kembali ke menu utama");
             System.out.println("5. Keluar");
-            System.out.print("Masukkan pilihan Anda: ");
-            adminChoice = scanner.nextInt();
+            System.out.print("Masukkan pilihan Anda : ");
+            adminChoice = scanner.next().charAt(0);
 
             switch (adminChoice) {
-                case 1:
+                case '1':
                     fiturKelolaStokObat();
-
                     break;
 
-                case 2:
+                case '2':
                     fiturIdentifikasiKadaluwarsa();
-
                     break;
 
-                case 3:
+                case '3':
                     lihatTotalTransaksi();
-
                     break;
 
-                case 4:
+                case '4':
                     System.out.println("\n...kembali ke menu utama...");
-
+                    tanyaUlangProgram();
                     return;
 
-                case 5:
+                case '5':
                     System.out.println("..Keluar..");
                     System.exit(0);
                     break;
@@ -93,10 +93,12 @@ public class KASIRFIX {
                     System.out.println("Pilihan tidak sesuai (1),(2),(3) dan (4), Coba lagi!");
             }
         } while (adminChoice != 4);
+        scanner.close();
     }
 
     private static void fiturKelolaStokObat() {
-        int pilihan;
+
+        char pilihan;
 
         String[][] stokObat = {
                 { "Batuk", "20" },
@@ -111,32 +113,36 @@ public class KASIRFIX {
             System.out.println("3. Kurangi Stok Obat");
             System.out.println("4. Kembali ke menu");
             System.out.println("5. Keluar");
-            System.out.print("\nMasukkan pilihan Anda: ");
+            System.out.print("\nMasukkan pilihan Anda : ");
 
-            pilihan = scanner.nextInt();
+            pilihan = scanner.next().charAt(0);
 
             switch (pilihan) {
-                case 1:
+                case '1':
                     tampilkanDetailStok(stokObat);
                     break;
-                case 2:
+                case '2':
                     tambahStok(stokObat);
                     break;
-                case 3:
+                case '3':
                     kurangiStok(stokObat);
                     break;
-                case 4:
+                case '4':
                     System.out.println("----------------------------");
                     System.out.println("...kembali ke menu...");
                     return;
-                case 5:
+                case '5':
                     System.out.println("..Keluar..");
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Pilihan tidak valid, harap masukkan angka 1-4!");
+                    System.out.println("Pilihan tidak valid, harap masukkan angka berupa 1-4!");
+                    break;
             }
+
         } while (pilihan != 5);
+
+        scanner.close();
     }
 
     private static void tampilkanDetailStok(String[][] obatList) {
@@ -154,9 +160,9 @@ public class KASIRFIX {
     }
 
     private static void tambahStok(String[][] obatList) {
+        scanner.nextLine();
         System.out.print("\nMasukkan nama obat untuk menambah stok : ");
-        Scanner scanner0 = new Scanner(System.in);
-        String nama = scanner0.nextLine();
+        String nama = scanner.nextLine();
 
         boolean ditemukan = false;
 
@@ -166,9 +172,9 @@ public class KASIRFIX {
                 int jumlah = 0;
 
                 while (!inputValid) {
-                    System.out.print("\nMasukkan jumlah stok yang akan ditambahkan untuk " + obat[0] + ": ");
+                    System.out.print("\nMasukkan jumlah stok yang akan ditambahkan untuk " + obat[0] + " : ");
 
-                    String inputJumlah = scanner0.nextLine();
+                    String inputJumlah = scanner.nextLine();
                     if (inputJumlah.matches("\\d+")) {
                         jumlah = Integer.parseInt(inputJumlah);
 
@@ -194,15 +200,19 @@ public class KASIRFIX {
         }
 
         if (!ditemukan) {
-            System.out.println("Obat tidak ditemukan dalam daftar stok.");
+            System.out.println("\nObat tidak ditemukan dalam daftar stok.");
+            System.out.println("Masukkan yang benar!");
+            System.out.println("\n...kembali ke menu kelola..");
+            return;
+
         }
-        scanner0.close();
+
     }
 
     private static void kurangiStok(String[][] obatList) {
-        System.out.print("\nMasukkan nama obat untuk mengurangi stok : ");
-        Scanner scanner1 = new Scanner(System.in);
-        String nama = scanner1.nextLine();
+        scanner.nextLine();
+        System.out.print("\nMasukkan nama obat untuk mengurangi stok  : ");
+        String nama = scanner.nextLine();
         boolean ditemukan = false;
 
         for (String[] obat : obatList) {
@@ -212,7 +222,7 @@ public class KASIRFIX {
 
                 while (!inputValid) {
                     System.out.print("\nMasukkan jumlah yang akan dikurangi dari stok " + obat[0] + ": ");
-                    String inputJumlah = scanner1.nextLine();
+                    String inputJumlah = scanner.nextLine();
 
                     if (inputJumlah.matches("\\d+")) {
                         jumlah = Integer.parseInt(inputJumlah);
@@ -242,8 +252,11 @@ public class KASIRFIX {
 
         if (!ditemukan) {
             System.out.println("Obat tidak ditemukan dalam daftar stok.");
+            System.out.println("Masukkan yang benar!");
+            System.out.println("\n...kembali ke menu kelola..");
+            return;
         }
-        scanner1.close();
+
     }
 
     private static void fiturIdentifikasiKadaluwarsa() {
@@ -307,6 +320,7 @@ public class KASIRFIX {
 
     private static void lihatTotalTransaksi() {
         System.out.println("\n---  Menu Total Transaksi ---");
+        System.out.println("Berikut merupakan laporan pendapatan para pengguna  yang sudah bertransaksi hari ini :");
         for (int i = 0; i < indeksTransaksi; i++) {
             System.out.println("\nTransaksi ke-" + (i + 1) + ": Rp." + totalPembelian[i] + ",-");
 
@@ -336,14 +350,16 @@ public class KASIRFIX {
         System.out.println("\n--- Fitur User ---");
         System.out.println("(1) Yuk, Berbelanja!  || (2) ..Yah Sampai Jumpa..");
         System.out.print("Masukkan pilihan Anda: ");
-        int userChoice = scanner.nextInt();
+        char userChoice = scanner.next().charAt(0);
 
         switch (userChoice) {
-            case 1:
-                fiturPembayaran();
+            case '1':
+                do {
+                    fiturPembayaran();
+                } while (balik);
                 break;
 
-            case 2:
+            case '2':
                 System.out.println("======================================");
                 System.out.println("Terimakasih! Bye bye~ ^_^");
                 System.exit(0);
@@ -356,12 +372,20 @@ public class KASIRFIX {
     }
 
     private static int fiturPembayaran() {
+        int hargaTerpilih, nomorObat1, nomorJenisObat;
+        String obatTerpilih;
+        String semua = " ";
 
+        String[] namaObat;
+        int[] hargaObat;
+        String namaJenisObat;
         int total = 0;
+        char pilihan;
+
         String[] jenisObatan = { "Obat Batuk", "Obat Pilek", "Obat Pusing" };
         String pilihObatLagi;
         boolean memilihObatLagi;
-        boolean mengulang = false;
+        balik = true;
 
         do {
             System.out.println("\nDaftar Jenis Obat di Apotek:");
@@ -369,15 +393,12 @@ public class KASIRFIX {
                 System.out.println((i + 1) + ". " + jenisObatan[i]);
             }
 
-            System.out.print("Masukkan nomor jenis obat yang ingin Anda pilih: ");
-            int nomorJenisObat = scanner.nextInt();
+            System.out.print("Masukkan nomor jenis obat yang ingin Anda pilih (harus angka): ");
+            nomorJenisObat = scanner.nextInt();
 
             if (nomorJenisObat >= 1 && nomorJenisObat <= jenisObatan.length) {
-                String namaJenisObat = jenisObatan[nomorJenisObat - 1];
+                namaJenisObat = jenisObatan[nomorJenisObat - 1];
                 System.out.println("Anda memilih jenis obat: " + namaJenisObat);
-
-                String[] namaObat;
-                int[] hargaObat;
 
                 if (namaJenisObat.equals("Obat Batuk")) {
                     namaObat = new String[] { "Actifed cough", "Woods Antitussive", "Sanadryl DMP",
@@ -403,13 +424,14 @@ public class KASIRFIX {
                         System.out.println((i + 1) + "." + namaObat[i] + "\nHarga: Rp." + hargaObat[i] + ",-\n");
                     }
 
-                    System.out.print("Masukkan nomor obat yang Anda pilih: ");
-                    int nomorObat1 = scanner.nextInt();
+                    System.out.print("Masukkan nomor obat yang Anda pilih (berupa angka): ");
+                    nomorObat1 = scanner.nextInt();
 
                     if (nomorObat1 >= 1 && nomorObat1 <= namaObat.length) {
 
-                        String obatTerpilih = namaObat[nomorObat1 - 1];
-                        int hargaTerpilih = hargaObat[nomorObat1 - 1];
+                        obatTerpilih = namaObat[nomorObat1 - 1];
+                        semua += obatTerpilih + ", ";
+                        hargaTerpilih = hargaObat[nomorObat1 - 1];
                         System.out.println("\n" + "Obat yang Anda pilih adalah: " + obatTerpilih);
                         System.out.println("Harga obat yang Anda pilih: Rp." + hargaTerpilih + ",-");
                         System.out.println("-----------------------------------");
@@ -419,16 +441,20 @@ public class KASIRFIX {
 
                     } else {
                         System.out.println(
-                                "\nMohon pilih nomor obat yang benar! Pesanan obat anda akan hangus jika memasukkan nomor obat yang salah!");
-                        System.out.println("\n1. Kembali ke awal program");
-                        System.out.println("2. Keluar ");
+                                "\nMohon pilih nomor obat yang benar!");
+                        System.out.println("Pesanan obat anda akan hangus!");
+                        System.out.println("============================");
+                        System.out.println("1. Kembali ke menu awal.");
+                        System.out.println("2. Keluar. ");
+                        System.out.println("----------------------------");
                         System.out.print("Pilihan Anda: ");
-                        int pilihan = scanner.nextInt();
+                        pilihan = scanner.next().charAt(0);
 
-                        if (pilihan == 1) {
-                            System.out.println();
+                        if (pilihan == '1') {
+                            total = 0;
+                            fiturPembayaran();
 
-                        } else if (pilihan == 2) {
+                        } else if (pilihan == '2') {
                             System.out.println("...Terimakasih....");
                             System.exit(0);
                         } else {
@@ -436,7 +462,7 @@ public class KASIRFIX {
                             System.exit(0);
                         }
                     }
-                } while (!mengulang);
+                } while (balik());
                 memilihObatLagi = true;
                 pilihObatLagi = String.valueOf(memilihObatLagi);
                 System.out.print("Apakah Anda ingin memesan obat lagi (y/t)? : ");
@@ -444,15 +470,31 @@ public class KASIRFIX {
 
                 if (pilihObatLagi.equalsIgnoreCase("y")) {
                     memilihObatLagi = true;
-                }
-
-                else if (pilihObatLagi.equalsIgnoreCase("t")) {
+                } else if (pilihObatLagi.equalsIgnoreCase("t")) {
                     boolean cobaLagi = true;
+
+                    do {
+                        if (!semua.isEmpty()) {
+                            semua = semua.substring(0, semua.length() - 2); // untuk menghilangkan koma terakhir
+                        }
+                        obatTerpilih = namaObat[nomorObat1 - 1];
+                        System.out.println("\nTotal akhir semua harga obat yang dipesan : Rp." + total + ",-");
+                        System.out.println("Semua obat yang anda beli adalah : " + semua);
+                        break;
+                    } while (balik);
+                    System.out.println();
+
                     do {
 
                         if (total < 100000) {
+                            System.out
+                                    .println(
+                                            "\nSilahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");
+                            System.out.println("-----------------------------------------------------------------");
+                            System.out.println("[Transaksi tercatat pada laporan pendapatan pada fitur admin]");
                             System.out.println(
-                                    "Silahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");
+                                    "Terima kasih telah melakukan pembelian di apotek kami! Have a great day!");
+                            tanyaUlangProgram();
                             break;
                         }
 
@@ -488,6 +530,17 @@ public class KASIRFIX {
                                         System.out.println("----------------------------------------------------");
                                         System.out.println("Total harga yang harus anda bayar adalah : "
                                                 + (total - (total * dis)));
+                                        System.out.println(
+                                                "-----------------------------------------------------------------------------");
+                                        System.out.println(
+                                                "[Transaksi tercatat pada laporan pendapatan pada fitur admin]");
+                                        System.out.println(
+                                                "Terima kasih telah melakukan pembelian di apotek kami! Have a great day!");
+                                        System.out
+                                                .println(
+                                                        "Silahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");
+                                        tanyaUlangProgram();
+                                        break;
                                     }
 
                                 } else if (kartuMember.equalsIgnoreCase("t")) {
@@ -511,6 +564,8 @@ public class KASIRFIX {
                                     System.out.println("------------------------------------------");
                                     System.out.println(
                                             "Selamat! dengan pengguna " + nama + " telah menjadi Member Premium!");
+                                    System.out.println("[Transaksi tercatat pada laporan pendapatan pada fitur admin]");
+                                    tanyaUlangProgram();
 
                                     if (total >= 100000 && total <= 500000) {
                                         if (total < 200000) {
@@ -536,10 +591,21 @@ public class KASIRFIX {
                                         System.out.println("----------------------------------------------------");
                                         System.out.println("Total harga yang harus anda bayar adalah : "
                                                 + (total - (total * dis)));
+                                        System.out.println(
+                                                "-----------------------------------------------------------------------------");
+                                        System.out.println(
+                                                "Terima kasih telah melakukan pembelian di apotek kami! Have a great day!");
+                                        System.out
+                                                .println(
+                                                        "Silahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");
+                                        System.out.println(
+                                                "[Transaksi tercatat pada laporan pendapatan pada fitur admin]");
+                                        tanyaUlangProgram();
+                                        break;
                                     }
 
                                 } else {
-                                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                                    System.out.println("~~");
                                     System.out.println("INPUT PILIHAN YANG BENAR! (y) / (t)! ");
                                     System.out.println("...kembali ke pertanyaan diskon....");
                                     cobaLagi = false;
@@ -548,10 +614,17 @@ public class KASIRFIX {
                             } else if (inginDiskonInput.equalsIgnoreCase("t")) {
                                 System.out.println("Total harga yang harus dibayar sebanyak : Rp." + total + ",-");
                                 System.out.println(
-                                        "Silahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");
-
+                                        "-----------------------------------------------------------------------------");
+                                System.out.println("[Transaksi tercatat pada laporan pendapatan pada fitur admin]");
+                                System.out.println(
+                                        "Terima kasih telah melakukan pembelian di apotek kami! Have a great day!");
+                                System.out
+                                        .println(
+                                                "Silahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");
+                                tanyaUlangProgram();
+                                break;
                             } else {
-                                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                                System.out.println("~");
                                 System.out.println("SILAHKAN INPUT YANG BENAR! (y) / (t)!");
                                 cobaLagi = false;
                             }
@@ -565,13 +638,11 @@ public class KASIRFIX {
                     // Menyimpan total transaksi pada array totalTransaksi
                     totalTransaksi[indeksTransaksi++] = totalTransaksiPembayaran += total;
 
-                    System.out.println("-----------------------------------------------------------------");
-                    System.out.println("Terima kasih telah melakukan pembelian di apotek kami! Have a great day!");
-                    break;
-                }
-
-                else {
-                    System.out.println("\n Pilih (y) / (t) saja. Lakukan lagi!");
+                } else {
+                    System.out.println("-----------------------------------------------------");
+                    System.out.println("Input salah. Pilih (y) / (t) saja.");
+                    System.out.println("WARNING! PILIH YANG BENAR! SISTEM PEMESANAN AKAN DIULANG DARI AWAL!");
+                    balik(); // Panggil metode balik untuk mengonfirmasi pilihan
                 }
 
             } else {
@@ -583,6 +654,12 @@ public class KASIRFIX {
 
         } while (memilihObatLagi);
         System.out.println();
+        totalPembelian[indeksTransaksi] = total;
+
+        // Menyimpan total transaksi pada array totalTransaksi
+        totalTransaksi[indeksTransaksi++] = totalTransaksiPembayaran += total;
+
+        // Setelah transaksi selesai, kembali ke menu utama
 
         return total;
 
@@ -606,23 +683,46 @@ public class KASIRFIX {
         return diskon;
     }
 
+    private static void tampilkanRingkasanPembelian() {
+        System.out.println("\nRingkasan Pembelian:");
+        System.out.println("Total harga: Rp." + totalTransaksiPembayaran);
+        System.out.println("Obat yang telah dipilih: " + semua); // Asumsi bahwa 'semua' berisi daftar obat yang dipilih
+        System.out
+                .println(
+                        "------------------------------------------------------------------------------------------------");
+        System.out.println(
+                "Silahkan melakukan transaksi pembayaran via cash/debit/credit/Qris dll dengan penjaga kasir! ");
+        System.out.println(
+                "Pemberlakuan transaksi diatas 100ribu akan mendapatkan diskon yang akan ditentukan secara manual oleh penjaga kasir!");
+        System.out.println("Terima kasih telah melakukan pembelian di apotek kami! Have a great day!");
+        System.exit(0);
+    }
+
+    // Ubah metode balik untuk menghandle pilihan pengguna
+    private static boolean balik() {
+        System.out.print("\nApakah anda ingin memesan obat (y) / cukup (t)?");
+        char pilihan = scanner.next().charAt(0);
+
+        if (pilihan == 'y' || pilihan == 'Y') {
+            fiturPembayaran();
+        }
+
+        else if (pilihan == 't' || pilihan == 'T') {
+            tampilkanRingkasanPembelian();
+        }
+
+        else {
+            System.out.println("Warning! Input tidak valid secara terus menerus!");
+            System.out.println("..Sistem akan ditutup...");
+            System.exit(0);
+        }
+        return pilihan == 'y' || pilihan == 't';
+    }
+
     private static boolean tanyaUlangProgram() {
-        boolean validInput = false;
-        char pilihan;
-
-        do {
-            System.out.print("\nApakah Anda ingin memulai kembali program? (y/t): ");
-            pilihan = scanner.next().charAt(0);
-
-            if (pilihan == 'y' || pilihan == 'Y' || pilihan == 't' || pilihan == 'T') {
-                validInput = true;
-                break;
-            } else {
-                System.out.println("Mohon maaf, Anda salah input. Silakan masukkan (y) / (t).");
-            }
-        } while (!validInput);
+        System.out.print("\nApakah Anda ingin memulai kembali program? (y/t): ");
+        char pilihan = scanner.next().charAt(0);
 
         return (pilihan == 'y' || pilihan == 'Y');
     }
-
 }
